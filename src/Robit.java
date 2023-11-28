@@ -12,4 +12,12 @@ public class Robit {
         previousCard = "";
     }
 
+    public boolean hitOrStand(){
+        int random = (int )(Math.random() * 1) + 1;
+        if(random == 1){
+            hitOrStand = true;//stand
+        }
+        return hitOrStand; //hit
+    }
+
 }
