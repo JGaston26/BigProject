@@ -22,12 +22,15 @@ public class Blackjack {
      */
 
     public Blackjack() {
-        hand = 0;
+        hand = (int) (Math.random() * 21) + 1;
         previousCard = 0;
         cash = 1000;
         bet = 0;
     }
 
+    public int getHand() {
+        return hand;
+    }
     /**
      * Starts the game and welcomes the user.
      *
@@ -35,7 +38,17 @@ public class Blackjack {
      */
     public void start(String name) {
         Robit player2 = new Robit();
-        System.out.println("Welcome to Blackjack " + name + ".");
+        System.out.println("Welcome to Blackjack!");
+        System.out.println();
+        System.out.println("  BLACKJACK RULES: ");
+        System.out.println("	-Each player is dealt 2 cards. The dealer is dealt 2 cards with one face-up and one face-down.");
+        System.out.println("	-Cards are equal to their value with face cards being 10 and an Ace being 1 or 11.");
+        System.out.println("	-The players cards are added up for their total.");
+        System.out.println("	-Players “Hit” to gain another card from the deck. Players “Stand” to keep their current card total.");
+        System.out.println("	-Dealer “Hits” until they equal or exceed 17.");
+        System.out.println("	-The goal is to have a higher card total than the dealer without going over 21.");
+        System.out.println("	-If the player total equals the dealer total, it is a “Push” and the hand ends.");
+        System.out.println();
 
     }
 
@@ -44,10 +57,9 @@ public class Blackjack {
      *
      * @return The value of the previous card
      */
-    public int drawCard() {
+    public void drawCard() {
         previousCard = (int) (Math.random() * 14) + 1;
         hand += previousCard;
-        return previousCard;
     }
 
 }
