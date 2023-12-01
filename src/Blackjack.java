@@ -14,6 +14,9 @@ public class Blackjack {
     private int cash;
     /** The value the user will bet */
     private int bet;
+    private Scanner scan;
+    private String choice;
+    private BlackjackLogic logic;
 
     /**
      * Instantiates a Blackjack object
@@ -26,6 +29,9 @@ public class Blackjack {
         previousCard = 0;
         cash = 1000;
         bet = 0;
+        scan = new Scanner(System.in);
+        choice = "";
+        logic = new BlackjackLogic();
     }
 
     public int getHand() {
@@ -38,7 +44,7 @@ public class Blackjack {
      */
     public void start(String name) {
         Robit player2 = new Robit();
-        System.out.println("Welcome to Blackjack!");
+        System.out.println("Welcome to Blackjack " + name + "!");
         System.out.println();
         System.out.println("  BLACKJACK RULES: ");
         System.out.println("	-Each player is dealt 2 cards. The dealer is dealt 2 cards with one face-up and one face-down.");
@@ -50,16 +56,33 @@ public class Blackjack {
         System.out.println("	-If the player total equals the dealer total, it is a “Push” and the hand ends.");
         System.out.println();
 
+        while (logic.gameRunning()) {
+            turn();
+            player2.turn2();
+        }
     }
 
     /**
      * Draws a card at random and adds it to the value of hand
-     *
-     * @return The value of the previous card
      */
     public void drawCard() {
         previousCard = (int) (Math.random() * 14) + 1;
         hand += previousCard;
+    }
+
+    public void turn() {
+        System.out.println("Your current hand is: " + hand);
+        System.out.println("Would you like to hit or stand? (H/S): ");
+        choice = scan.nextLine();
+        if (choice.equals("H")) {
+            drawCard();
+        } else if (choice.equals("S")) {
+            hand += 0;
+        } else {
+            System.out.println("That is not a choice try again!");
+            System.out.println("Would you like to hit or stand? (H/S): ");
+            choice = scan.nextLine();
+        }
     }
 
 }
