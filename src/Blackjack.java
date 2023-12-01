@@ -31,7 +31,7 @@ public class Blackjack {
         bet = 0;
         scan = new Scanner(System.in);
         choice = "";
-        logic = new BlackjackLogic();
+        logic = new BlackjackLogic(this, player2);
     }
 
     public int getHand() {

@@ -1,13 +1,14 @@
 public class BlackjackLogic {
-    private Blackjack game2;
+    private Blackjack game;
     private Robit player2;
 
-    public BlackjackLogic() {
-        game2 = game;
+    public BlackjackLogic(Blackjack aa, Robit aa2) {
+        game = aa;
+        player2 = aa2;
     }
 
     public boolean gameRunning() {
-        if (game2.getHand() >= 21) {
+        if (game.getHand() >= 21) {
             return false;
         } else if (player2.getHand() >= 21) {
             return false;
