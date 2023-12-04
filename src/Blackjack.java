@@ -17,6 +17,7 @@ public class Blackjack {
     private Scanner scan;
     private String choice;
     private BlackjackLogic logic;
+    private  Robit player2 = new Robit();
 
     /**
      * Instantiates a Blackjack object
@@ -77,11 +78,14 @@ public class Blackjack {
         if (choice.equals("H")) {
             drawCard();
         } else if (choice.equals("S")) {
-            hand += 0;
+            player2.turn2();
         } else {
             System.out.println("That is not a choice try again!");
             System.out.println("Would you like to hit or stand? (H/S): ");
             choice = scan.nextLine();
+        }
+        if(choice.equals("S") && player2.getPreviousMove().equals("S")){
+            logic.compare();
         }
     }
 

@@ -4,25 +4,34 @@ public class Robit {
     private int hand;
     private boolean hitOrStand;
     private int previousCard;
-
+    private String previousMove;
     public Robit(){
 
         hand = (int) (Math.random() * 21) + 1;
         hitOrStand = false;
         previousCard = 0;
+        previousMove = "";
     }
 
     public int getHand() {
         return hand;
     }
-    public boolean hitOrStand(){
+    private void setPreviousMove(String s){
+        previousMove = s;
+    }
+    public String getPreviousMove(){
+        return previousMove;
+    }
+
+    private void hitOrStand(){
         int random = (int )(Math.random() * 1) + 1;
         if (hand >= 17) {
-            return hitOrStand;
+            setPreviousMove("S");
+            hitOrStand = false;
         } else if(random == 1){
             hitOrStand = true;//stand
+            setPreviousMove("H");
         }
-        return hitOrStand; //hit
     }
 
     public void turn2() {
