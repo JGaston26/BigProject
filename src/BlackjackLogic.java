@@ -1,14 +1,19 @@
+import java.util.Scanner;
 public class BlackjackLogic {
-    private Blackjack game;
+    private Blackjack player1;
     private Robit player2;
+    private Scanner scan;
+
+
 
     public BlackjackLogic(Blackjack aa, Robit aa2) {
-        game = aa;
+        player1 = aa;
         player2 = aa2;
+        scan = new Scanner(System.in);
     }
 
     public boolean gameRunning() {
-        if(game.getHand() > 21 /*player2.getPreviousMove().equals("S") */){
+        if(player1.getHand() > 21 /*player2.getPreviousMove().equals("S") */){
             return false;
         }else if(player2.getHand() > 21) {
             return false;
@@ -16,8 +21,28 @@ public class BlackjackLogic {
             return true;
         }
     }
+
+    public void continuePlaying() {
+        if (player1.getCash() == 0) {
+            System.out.println("You have no money! Thanks for playing, now get out.");
+            player1.setAskContinue("End");
+        } else {
+            System.out.print("Do you want to continue (Y/N): ");
+            String ask = scan.nextLine();
+
+            if (ask.equals("Y")) {
+                player1.setHand(0);
+                player1.drawCard();
+                player2.resetHand();
+            } else {
+                System.out.println("Thanks for Playing!");
+                player1.setAskContinue("End");
+            }
+        }
+    }
+
     public boolean checkWin() {
-        int playerHand = game.getHand();
+        int playerHand = player1.getHand();
         int dealerHand = player2.getHand();
 
         // Check if player or dealer has busted
@@ -39,7 +64,7 @@ public class BlackjackLogic {
         }
 
         // Compare hands if neither player nor dealer has a Blackjack
-        if (playerHand > dealerHand) {
+        else if (playerHand > dealerHand) {
             System.out.println("Player wins!");
             return true;
         } else if (playerHand < dealerHand) {

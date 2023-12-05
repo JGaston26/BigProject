@@ -10,7 +10,7 @@ public class Robit {
         hand = (int) (Math.random() * 21) + 1;
         hitOrStand = false;
         previousCard = 0;
-        previousMove = "";
+        previousMove = "H";
 
     }
 
@@ -20,6 +20,7 @@ public class Robit {
 
     public void resetHand(){
         hand = 0;
+        hand += (int) (Math.random() * 14) + 1;
     }
 
     public String getPreviousMove(){
@@ -45,18 +46,18 @@ public class Robit {
 
     public void turn2() {
         System.out.println("Dealer's current hand is: " + hand);
-        hitOrStand();
-        if (hitOrStand) {
+
+        while (hand < 17) { // Dealer hits until hand is 17 or higher
             previousCard = (int) (Math.random() * 14) + 1;
             System.out.println("Dealer hits and draws a " + previousCard);
+            System.out.println(" ");
 
             hand += previousCard;
             System.out.println("Dealer's hand is now: " + hand);
-            this.setPreviousMove("H");
 
-        } else {
-            this.setPreviousMove("S");
         }
+
+        setPreviousMove("S"); // Dealer stands after hitting until 17 or higher
     }
 
     private void setPreviousMove(String s){

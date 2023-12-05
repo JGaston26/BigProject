@@ -40,7 +40,24 @@ public class Blackjack {
     public int getHand() {
         return hand;
     }
-
+    public int getCash(){
+        return cash;
+    }
+    public int getBet(){
+        return bet;
+    }
+    public void addCash(int val){
+        cash += val;
+    }
+    public void subtractCash(int val){
+        cash -= val;
+    }
+    public void setHand(int i){
+        hand = i;
+    }
+    public void setAskContinue(String str){
+        askContinue = str;
+    }
     public String printHand(){
         return  "Your current hand is: " + getHand();
     }
@@ -49,9 +66,27 @@ public class Blackjack {
         return "Dealers current hand is: " + player2.getHand();
     }
 
-    public String getChoice(){
-        return choice;
+    public void setBet(int betVal){
+        bet = betVal;
     }
+
+    public void doBet(int betVal){
+        if(logic.checkWin()){
+            addCash(betVal);
+            System.out.print("You won $" + betVal + " ");
+            printHand();
+        }else{
+            subtractCash(betVal);
+            System.out.print("You lost $" + betVal + " ");
+            printHand();
+        }
+    }
+
+    public void drawCard() {
+        previousCard = (int) (Math.random() * 14) + 1;
+        hand += previousCard;
+    }
+
     /**
      * Starts the game and welcomes the user.
      *
@@ -73,58 +108,44 @@ public class Blackjack {
 
         while(!askContinue.equals("End")) {
             turn();
-            player2.turn2();
         }
     }
 
     /**
      * Draws a card at random and adds it to the value of hand
      */
-    public void drawCard() {
-        previousCard = (int) (Math.random() * 14) + 1;
-        hand += previousCard;
-    }
+
 
     public void turn() {
+        System.out.println("You have $" + cash);
+        System.out.print("How much you like to bet: ");
+        setBet(scan.nextInt());
+        scan.nextLine();
         // Assuming logic is an instance of your game logic class
         while (logic.gameRunning()) {
             System.out.println(printHand());
-            System.out.println("Would you like to hit or stand? (H/S): ");
+            System.out.println(printDealerHand());
+            System.out.print("Would you like to hit or stand? (H/S): ");
             choice = scan.nextLine();
-
             if (choice.equals("H")) {
+                System.out.println(" ");
                 drawCard();
                 System.out.println(printHand());
-                System.out.println(printDealerHand());
-            } else if (choice.equals("S")) {
-                // The player stands, no need to update the hand here
-            } else {
-                System.out.println("That is not a choice try again!");
-                continue; // Restart the loop if the choice is not valid
-            }
-
-            // Check if the player and dealer both stood
-            if (choice.equals("S")) {
-                System.out.println(printHand());
-                System.out.println(printDealerHand());
-                if(player2.getHand() >= 17){
-                    logic.checkWin();
-                } // Assuming there's a stand method in your player2 class
-
-
-                // Check if the game is still running
-                if (logic.gameRunning()) {
-                    System.out.print("Do you want to continue (Y/N): ");
-                    String ask = scan.nextLine();
-
-                    if (ask.equals("Y")) {
-                        hand = 0;
-                        player2.resetHand();
-                    } else {
-                        System.out.println("Thanks for Playing!");
-                        break; // Exit the loop if the player decides not to continue
-                    }
+                System.out.println("You have $" + getCash());
+                if (getHand() > 21) {
+                    doBet(getBet());
+                    logic.continuePlaying();
+                }else if(player2.getHand() > 21){
+                    doBet(getBet());
+                    logic.continuePlaying();
                 }
+            } else if (choice.equals("S")) {
+                player2.turn2();
+                doBet(getBet());
+                logic.continuePlaying();
+
+            } else {
+                System.out.println("That is not a choice. Try again!");
             }
         }
     }
