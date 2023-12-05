@@ -18,6 +18,7 @@ public class Blackjack {
     private String choice;
     private BlackjackLogic logic;
     private  Robit player2 = new Robit();
+    private String askContinue;
 
     /**
      * Instantiates a Blackjack object
@@ -33,10 +34,23 @@ public class Blackjack {
         scan = new Scanner(System.in);
         choice = "";
         logic = new BlackjackLogic(this, player2);
+        askContinue = "";
     }
 
     public int getHand() {
         return hand;
+    }
+
+    public String printHand(){
+        return  "Your current hand is: " + getHand();
+    }
+
+    public String printDealerHand(){
+        return "Dealers current hand is: " + player2.getHand();
+    }
+
+    public String getChoice(){
+        return choice;
     }
     /**
      * Starts the game and welcomes the user.
@@ -57,7 +71,7 @@ public class Blackjack {
         System.out.println("	-If the player total equals the dealer total, it is a “Push” and the hand ends.");
         System.out.println();
 
-        while (logic.gameRunning()) {
+        while(!askContinue.equals("End")) {
             turn();
             player2.turn2();
         }
@@ -72,21 +86,46 @@ public class Blackjack {
     }
 
     public void turn() {
-        System.out.println("Your current hand is: " + hand);
-        System.out.println("Would you like to hit or stand? (H/S): ");
-        choice = scan.nextLine();
-        if (choice.equals("H")) {
-            drawCard();
-        } else if (choice.equals("S")) {
-            player2.turn2();
-        } else {
-            System.out.println("That is not a choice try again!");
+        // Assuming logic is an instance of your game logic class
+        while (logic.gameRunning()) {
+            System.out.println(printHand());
             System.out.println("Would you like to hit or stand? (H/S): ");
             choice = scan.nextLine();
-        }
-        if(choice.equals("S") && player2.getPreviousMove().equals("S")){
-            logic.compare();
+
+            if (choice.equals("H")) {
+                drawCard();
+                System.out.println(printHand());
+                System.out.println(printDealerHand());
+            } else if (choice.equals("S")) {
+                // The player stands, no need to update the hand here
+            } else {
+                System.out.println("That is not a choice try again!");
+                continue; // Restart the loop if the choice is not valid
+            }
+
+            // Check if the player and dealer both stood
+            if (choice.equals("S")) {
+                System.out.println(printHand());
+                System.out.println(printDealerHand());
+                if(player2.getHand() >= 17){
+                    logic.checkWin();
+                } // Assuming there's a stand method in your player2 class
+
+
+                // Check if the game is still running
+                if (logic.gameRunning()) {
+                    System.out.print("Do you want to continue (Y/N): ");
+                    String ask = scan.nextLine();
+
+                    if (ask.equals("Y")) {
+                        hand = 0;
+                        player2.resetHand();
+                    } else {
+                        System.out.println("Thanks for Playing!");
+                        break; // Exit the loop if the player decides not to continue
+                    }
+                }
+            }
         }
     }
-
 }
