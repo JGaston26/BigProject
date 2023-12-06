@@ -13,7 +13,7 @@ public class BlackjackLogic {
     }
 
     public boolean gameRunning() {
-        if(player1.getHand() > 21 /*player2.getPreviousMove().equals("S") */){
+        if(player1.getHand() > 21){
             return false;
         }else if (player2.getHand() > 21) {
             return false;
