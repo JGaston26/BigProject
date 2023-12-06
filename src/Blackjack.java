@@ -1,3 +1,6 @@
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -81,7 +84,7 @@ public class Blackjack {
         bet = betVal;
     }
 
-    public void doBet(int betVal){
+    public void doBet(int betVal) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         if(logic.checkWin()){
             addCash(betVal);
             System.out.print("You won $" + betVal + " ");
@@ -105,7 +108,7 @@ public class Blackjack {
     /**
      * Starts the game and welcomes the user.
      */
-    public void start() {
+    public void start() throws LineUnavailableException, IOException, UnsupportedAudioFileException {
         Robit player2 = new Robit();
         System.out.print("Enter your name: ");
         String name = scan.nextLine();
@@ -122,6 +125,12 @@ public class Blackjack {
         System.out.println();
 
         while(!askContinue.equals("End")) {
+            File file = new File("King Of Swing.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
             System.out.println("You have $" + cash);
             System.out.print("How much would you like to bet: ");
             turn();
@@ -133,7 +142,7 @@ public class Blackjack {
      */
 
 
-    public void turn() {
+    public void turn() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         setBet(scan.nextInt());
         scan.nextLine();
         // Assuming logic is an instance of your game logic class
@@ -161,6 +170,7 @@ public class Blackjack {
             } else {
                 System.out.println("That is not a choice. Try again!");
             }
+
         }
     }
 

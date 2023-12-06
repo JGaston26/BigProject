@@ -1,3 +1,6 @@
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 public class BlackjackLogic {
     private Blackjack player1;
@@ -26,6 +29,7 @@ public class BlackjackLogic {
         if (player1.getCash() <= 0) {
             System.out.println("You have no money! Thanks for playing, now get out.");
             player1.setAskContinue("End");
+            System.exit(0);
         } else {
             System.out.print("Do you want to continue (Y/N): ");
             String ask = scan.nextLine();
@@ -44,7 +48,7 @@ public class BlackjackLogic {
         }
     }
 
-    public boolean checkWin() {
+    public boolean checkWin() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         int playerHand = player1.getHand();
         int dealerHand = player2.getHand();
 
@@ -77,6 +81,7 @@ public class BlackjackLogic {
             System.out.println("It's a tie!");
             return true; // You can modify this based on your game rules for a tie.
         }
+
     }
 
 }
