@@ -37,6 +37,17 @@ public class Blackjack {
         askContinue = "";
     }
 
+    public Blackjack(int cash) {
+        hand = (int) (Math.random() * 21) + 1;
+        previousCard = 0;
+        this.cash = cash;
+        bet = 0;
+        scan = new Scanner(System.in);
+        choice = "";
+        logic = new BlackjackLogic(this, player2);
+        askContinue = "";
+    }
+
     public int getHand() {
         return hand;
     }
@@ -93,12 +104,12 @@ public class Blackjack {
 
     /**
      * Starts the game and welcomes the user.
-     *
-     * @param name The name of the user
      */
-    public void start(String name) {
+    public void start() {
         Robit player2 = new Robit();
-        System.out.println("Welcome to Blackjack " + name + "!");
+        System.out.print("Enter your name: ");
+        String name = scan.nextLine();
+        printName(name);
         System.out.println();
         System.out.println("  BLACKJACK RULES: ");
         System.out.println("	-Each player is dealt 2 cards. The dealer is dealt 2 cards with one face-up and one face-down.");
@@ -151,5 +162,9 @@ public class Blackjack {
                 System.out.println("That is not a choice. Try again!");
             }
         }
+    }
+
+    private static void printName(String name) {
+        System.out.println("Welcome to Blackjack " + name + "!");
     }
 }

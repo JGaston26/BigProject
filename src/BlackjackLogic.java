@@ -68,7 +68,7 @@ public class BlackjackLogic {
 
         // Compare hands if neither player nor dealer has a Blackjack
         else if (playerHand > dealerHand) {
-            System.out.println("Player wins!");
+            System.out.print("Player wins!\n");
             return true;
         } else if (playerHand < dealerHand) {
             System.out.println("Dealer wins!");
