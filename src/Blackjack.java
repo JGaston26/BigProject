@@ -83,8 +83,12 @@ public class Blackjack {
     }
 
     public void drawCard() {
-        previousCard = (int) (Math.random() * 14) + 1;
-        hand += previousCard;
+        previousCard = (int) (Math.random() * 11) + 1;
+        if (previousCard == 11 && hand + previousCard > 21) {
+            hand += 1;
+        } else {
+            hand += previousCard;
+        }
     }
 
     /**
@@ -107,6 +111,8 @@ public class Blackjack {
         System.out.println();
 
         while(!askContinue.equals("End")) {
+            System.out.println("You have $" + cash);
+            System.out.print("How much would you like to bet: ");
             turn();
         }
     }
@@ -117,8 +123,6 @@ public class Blackjack {
 
 
     public void turn() {
-        System.out.println("You have $" + cash);
-        System.out.print("How much you like to bet: ");
         setBet(scan.nextInt());
         scan.nextLine();
         // Assuming logic is an instance of your game logic class
@@ -130,7 +134,6 @@ public class Blackjack {
             if (choice.equals("H")) {
                 System.out.println(" ");
                 drawCard();
-                System.out.println(printHand());
                 System.out.println("You have $" + getCash());
                 if (getHand() > 21) {
                     doBet(getBet());

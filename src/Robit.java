@@ -20,7 +20,7 @@ public class Robit {
 
     public void resetHand(){
         hand = 0;
-        hand += (int) (Math.random() * 14) + 1;
+        hand += (int) (Math.random() * 11) + 1;
     }
 
     public String getPreviousMove(){
@@ -48,12 +48,20 @@ public class Robit {
         System.out.println("Dealer's current hand is: " + hand);
 
         while (hand < 17) { // Dealer hits until hand is 17 or higher
-            previousCard = (int) (Math.random() * 14) + 1;
-            System.out.println("Dealer hits and draws a " + previousCard);
-            System.out.println(" ");
-
-            hand += previousCard;
-            System.out.println("Dealer's hand is now: " + hand);
+            previousCard = (int) (Math.random() * 11) + 1;
+            if (previousCard == 11) {
+                System.out.println("Dealer hits and draws an ace");
+                System.out.println(" ");
+            }
+            if (previousCard == 11 && hand + previousCard > 21) {
+                hand += 1;
+                System.out.println("Dealer's hand is now: " + hand);
+            } else {
+                System.out.println("Dealer hits and draws a " + previousCard);
+                System.out.println();
+                hand += previousCard;
+                System.out.println("Dealer's hand is now: " + hand);
+            }
 
         }
 

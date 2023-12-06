@@ -15,7 +15,7 @@ public class BlackjackLogic {
     public boolean gameRunning() {
         if(player1.getHand() > 21 /*player2.getPreviousMove().equals("S") */){
             return false;
-        }else if(player2.getHand() > 21) {
+        }else if (player2.getHand() > 21) {
             return false;
         } else {
             return true;
@@ -23,7 +23,7 @@ public class BlackjackLogic {
     }
 
     public void continuePlaying() {
-        if (player1.getCash() == 0) {
+        if (player1.getCash() <= 0) {
             System.out.println("You have no money! Thanks for playing, now get out.");
             player1.setAskContinue("End");
         } else {
@@ -34,6 +34,9 @@ public class BlackjackLogic {
                 player1.setHand(0);
                 player1.drawCard();
                 player2.resetHand();
+            } else if (ask.equals("N")) {
+                System.out.println("Thanks for Playing!");
+                player1.setAskContinue("End");
             } else {
                 System.out.println("Thanks for Playing!");
                 player1.setAskContinue("End");
