@@ -175,6 +175,7 @@ public class Blackjack {
     }
 
     private static void printName(String name) {
-        System.out.println("Welcome to Blackjack " + name + "!");
+        System.out.println("Welcome to The Casino " + name + "!");
+        System.out.println("Remember, 99% of gamblers quit before the hit big!");
     }
 }
